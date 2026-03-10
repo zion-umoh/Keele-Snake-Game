@@ -9,6 +9,9 @@ SPACE_SIZE = 20
 
 class SnakeGame:
     def __init__(self):
+        self.label = tk.Label(self.window, text="Score:{}".format(self.score), font=('consolas', 40))
+        self.label.pack()
+        
         self.window = tk.Tk()
         self.window.title("Keele Snake Game")
         
