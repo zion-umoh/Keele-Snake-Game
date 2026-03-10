@@ -31,6 +31,35 @@ class SnakeGame:
         self.food = self.canvas.create_oval(self.food_coords[0], self.food_coords[1], 
                                             self.food_coords[0] + SPACE_SIZE, 
                                             self.food_coords[1] + SPACE_SIZE, fill="red")
+        
+        self.window.bind('<Left>', lambda event: self.change_direction('left'))
+        self.window.bind('<Right>', lambda event: self.change_direction('right'))
+        self.window.bind('<Up>', lambda event: self.change_direction('up'))
+        self.window.bind('<Down>', lambda event: self.change_direction('down'))
+        self.next_turn()
+
+    
+    def change_direction(self, new_dir):
+        self.direction = new_dir
+
+    def next_turn(self):
+        x, y = self.snake_coords[0]
+        if self.direction == "up": y -= SPACE_SIZE
+        elif self.direction == "down": y += SPACE_SIZE
+        elif self.direction == "left": x -= SPACE_SIZE
+        elif self.direction == "right": x += SPACE_SIZE
+
+        self.snake_coords.insert(0, [x, y])
+        square = self.canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill="green")
+        self.squares.insert(0, square)
+        
+        # Delete last part of snake
+        del self.snake_coords[-1]
+        self.canvas.delete(self.squares[-1])
+        del self.squares[-1]
+        
+        self.window.after(100, self.next_turn)
+
     
 if __name__ == "__main__":
     game = SnakeGame()
