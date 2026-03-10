@@ -63,6 +63,16 @@ class SnakeGame:
         
         self.window.after(100, self.next_turn)
 
+        if x < 0 or x >= WIDTH or y < 0 or y >= HEIGHT:
+            self.game_over()
+        else:
+            self.window.after(100, self.next_turn)
+    
+    def game_over(self):
+        self.canvas.delete(tk.ALL)
+        self.canvas.create_text(self.canvas.winfo_width()/2, self.canvas.winfo_height()/2,
+                                font=('consolas', 70), text="GAME OVER", fill="red", tag="gameover")
+
     
 if __name__ == "__main__":
     game = SnakeGame()
